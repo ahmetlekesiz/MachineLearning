@@ -12,12 +12,13 @@ figure; hold on;
 %               examples and 'ko' for the negative examples.
 %
 
+positives = find(y==1);
+negatives = find(y==0);
 
-
-
-
-
-
+%Plot positive ones
+plot(X(positives, 1), X(positives, 2), 'k+','LineWidth', 2, 'MarkerSize', 7);
+%Plot negative ones
+plot(X(negatives, 1), X(negatives, 2), 'ko', 'MarkerFaceColor', 'r', 'MarkerSize', 7);
 
 
 % =========================================================================
