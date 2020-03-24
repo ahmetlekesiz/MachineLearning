@@ -30,6 +30,7 @@ X = [ones(m, 1) X];
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
 %       
+
 size(all_theta); %10 401
 size(X); % 5000 401
 
@@ -46,7 +47,6 @@ r = rows(p);
 for k=1:r
   p(k) = find(A(k,:) == B(k,:));
 endfor
-
 
 % =========================================================================
 

@@ -21,11 +21,30 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+size(Theta1) %25 401
+size(X) %5000 400
 
+%Adding column of ones to X
+X = [ones(rows(X),1) X]; 
 
+z2 = X * Theta1'; % X = 5000x401 Theta1= 25x401 ; z2 = 5000x25
+a2 = sigmoid(z2);
 
+%Adding column of ones to a2
+a2 = [ones(rows(a2),1) a2]; 
 
+z3 = a2 * Theta2'; % a2= 5000x26 Theta2= 10x26
+a3 = sigmoid(z3);
 
+%a3 = 5000x10
+
+B = max(a3, [], 2);
+
+r = rows(p);
+
+for k=1:r
+  p(k) = find(a3(k,:) == B(k,:));
+endfor
 
 
 
