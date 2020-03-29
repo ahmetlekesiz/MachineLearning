@@ -63,21 +63,22 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+% Part 1
 
+%X = 5000*400
+a1 = [ones(size(X,1), 1) X]; %5000*401
 
+z2 = a1 * Theta1'; %z2 = 5000*25
+a2 = sigmoid(z2);
+a2 = [ones(size(a2, 1), 1) a2]; %5000*26 
 
+z3 = a2 * Theta2'; % z3 = 5000x10
+a3 = sigmoid(z3);
 
+%convert y from vector to matrix
+y_matrix = eye(num_labels)(y,:);  %5000x10
 
-
-
-
-
-
-
-
-
-
-
+J = (1/m)*sum(sum((-y_matrix.*log(a3)-(1-y_matrix).*log(1-a3))));
 
 
 % -------------------------------------------------------------
