@@ -80,6 +80,11 @@ y_matrix = eye(num_labels)(y,:);  %5000x10
 
 J = (1/m)*sum(sum((-y_matrix.*log(a3)-(1-y_matrix).*log(1-a3))));
 
+% Regularized cost function
+rTheta1 = Theta1(:, 2:end);
+rTheta2 = Theta2(:, 2:end);
+
+J = J + (lambda/(2*m))*(sum(sum((rTheta1.*rTheta1))) + sum(sum((rTheta2.*rTheta2))));
 
 % -------------------------------------------------------------
 
