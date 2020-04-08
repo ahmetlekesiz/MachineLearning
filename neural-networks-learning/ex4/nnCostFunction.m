@@ -112,12 +112,23 @@ for t = 1:m
   %Step 4
   Delta1 = d_2 * (a_1)'; % (25x1) * (401x1)' = 25x401
   Delta2 = d_3 * (a_2)'; % (10x1) * (26x1)' = 10x26
-  Theta1_grad = Theta1_grad + Delta1;
-  Theta2_grad = Theta2_grad + Delta2;
+  Theta1_grad = Theta1_grad + Delta1; % 25x401
+  Theta2_grad = Theta2_grad + Delta2; % 10x26
 endfor
 
 Theta1_grad = Theta1_grad / m;
 Theta2_grad = Theta2_grad / m;
+
+% ----- PART 3 -----
+
+Theta1_reg = Theta1;
+Theta1_reg(:, 1) = 0; 
+
+Theta2_reg = Theta2;
+Theta2_reg(:, 1) = 0; 
+
+Theta1_grad = Theta1_grad + (lambda/m) * Theta1_reg;
+Theta2_grad = Theta2_grad + (lambda/m) * Theta2_reg;
 
 % -------------------------------------------------------------
 
