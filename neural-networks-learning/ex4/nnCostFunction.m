@@ -63,7 +63,7 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
-% Part 1
+% ----- PART 1 -----
 
 %X = 5000*400
 a1 = [ones(size(X,1), 1) X]; %5000*401
@@ -85,6 +85,39 @@ rTheta1 = Theta1(:, 2:end);
 rTheta2 = Theta2(:, 2:end);
 
 J = J + (lambda/(2*m))*(sum(sum((rTheta1.*rTheta1))) + sum(sum((rTheta2.*rTheta2))));
+
+% ----- PART 2 -----
+
+Theta2_d2 = Theta2(:, 2:end);
+Theta1_grad = 0;
+Theta2_grad = 0;
+
+for t = 1:m
+  %step 1
+  a_1 = X(t,:); % 1x400
+  a_1 = a_1'; %400x1
+  a_1 = [1 ; a_1]; %add bias unit, 401x1
+  z_2 = Theta1 * a_1; %25x1
+  a_2 = sigmoid(z_2); %25x1
+  a_2 = [1 ; a_2]; %26x1
+  z_3 = Theta2 * a_2; %10x1
+  a_3 = sigmoid(z_3); %10x1
+  %Step 2
+  y_k = y_matrix(t,:); %1x10
+  y_k = y_k'; %10x1
+  d_3 = a_3 - y_k; %10x1
+  fprintf("");
+  %Step 3
+  d_2 = (Theta2_d2') * d_3 .* sigmoidGradient(z_2); %(10x25)' * 10x1 .* 25x1 = 25x1
+  %Step 4
+  Delta1 = d_2 * (a_1)'; % (25x1) * (401x1)' = 25x401
+  Delta2 = d_3 * (a_2)'; % (10x1) * (26x1)' = 10x26
+  Theta1_grad = Theta1_grad + Delta1;
+  Theta2_grad = Theta2_grad + Delta2;
+endfor
+
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
 
 % -------------------------------------------------------------
 
