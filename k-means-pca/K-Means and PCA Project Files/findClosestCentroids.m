@@ -21,6 +21,23 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+min = 10000000000;
+closest = 0;
+
+for i = 1:size(X)
+  for k = 1:size(centroids)
+    diff = X(i,:)-centroids(k,:);
+    diffs = diff.^2;
+    sumDiff = sum(diffs);
+    if (sumDiff<min)
+      min = sumDiff;
+      idx(i) = k;
+    endif
+  endfor
+  min = 10000000000;
+endfor
+
+
 
 
 

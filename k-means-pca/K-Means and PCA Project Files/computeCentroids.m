@@ -25,10 +25,24 @@ centroids = zeros(K, n);
 %
 % Note: You can use a for-loop over the centroids to compute this.
 %
+sum = 0;
+counter = 0;
 
-
-
-
+for i = 1:K
+  %% Sum
+  for t = 1:m
+    if (idx(t) == i)
+      sum = sum + X(t, :);
+      counter = counter + 1;
+    endif
+  endfor
+  
+  %% Assign new value
+  sum = sum ./ counter;
+  centroids(i, :) = sum;
+  sum = 0;
+  counter = 0;
+endfor
 
 
 
