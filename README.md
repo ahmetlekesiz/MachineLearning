@@ -1,2 +1,2 @@
 # MachineLearning
-Machine Learning Course Projects 
+Machine Learning Course Exercises 
