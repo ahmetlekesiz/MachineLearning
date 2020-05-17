@@ -40,20 +40,46 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+h = X * Theta';
+hR = h.*R;
+diff = hR - Y;
+diff2 = diff.^2;
+J = 1/2 * sum(diff2(:));
 
+%% X Gradient
+for i = 1:(size(X)(1))
+  idx = find(R(i, :) == 1); % list of all users that have rated movie i
+  Theta_temp = Theta(idx,:);
+  Y_temp = Y(i,idx);
+  X_grad(i,:) = (X(i,:) * Theta_temp' - Y_temp) * Theta_temp;
+endfor
 
+%% Theta Gradient
+for k = 1:(size(Theta)(1))
+  idx = find(R(:, k) == 1); %% su an işlem yapılan kullanıcının oyladigi filmler
+  X_temp = X(idx, :);
+  Y_temp = Y(idx, k);
+  Theta_temp = Theta(k,:);
+  Theta_grad(k, :) = (X_temp * Theta_temp' - Y_temp)' * X_temp;
+endfor
 
+%% Cost Reg
+Theta2 = Theta .^ 2;
+Theta2_sum = sum(Theta2(:));
 
+X2 = X .^ 2;
+X2_sum = sum(X2(:));
 
+J = J + (lambda/2) * Theta2_sum + (lambda/2) * X2_sum;
 
+%% Gradient Reg
+for k = 1:(size(X)(1))
+  X_grad(k,:) = X_grad(k,:)  + lambda*X(k,:);
+endfor
 
-
-
-
-
-
-
-
+for k = 1:(size(Theta)(1))
+  Theta_grad(k,:) = Theta_grad(k,:)  + lambda*Theta(k,:);
+endfor
 
 % =============================================================
 
